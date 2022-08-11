@@ -2,6 +2,7 @@
 
 Nouveau jeu Frogger codé 8 mois après le premier projet, en autonomie et avec pour objectif de prendre du recul sur la programmation en Java. 
 
+<img src="[/path/to/img.jpg](https://github.com/Elodaye/Nouveau_Jeu_Frogger_Java/blob/master/ImageFrogger.png)" alt="Alt text" title="Jeu de Frogger">
 https://github.com/Elodaye/Nouveau_Jeu_Frogger_Java/blob/master/ImageFrogger.png
 
 ## Fonctionnement 
