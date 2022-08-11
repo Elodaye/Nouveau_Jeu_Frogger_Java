@@ -2,6 +2,10 @@
 
 Nouveau jeu Frogger codé 8 mois après le premier projet, en autonomie et avec pour objectif de prendre du recul sur la programmation en Java. 
 
+
+![image](https://user-images.githubusercontent.com/84669542/184245862-8c2f7a52-466f-441e-bb0d-c566ba547a86.png)
+
+
 ## Fonctionnement 
 
 Le jeu se lance directement. En se déplaçant avec les flèches, il s'agit traverser les voies sans se faire percuter par une voiture, éviter le serpent, sauter sur des rondins flottants, et enfin ne pas tomber dans les trous, qui fait retourner la grenouille au point de départ. 
