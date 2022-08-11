@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Nouveau_Jeu_Frogger_Java" />
         <module name="Frogger_again" />
       </profile>
     </annotationProcessing>
