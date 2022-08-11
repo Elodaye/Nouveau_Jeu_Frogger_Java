@@ -3,7 +3,8 @@
 Nouveau jeu Frogger codé 8 mois après le premier projet, en autonomie et avec pour objectif de prendre du recul sur la programmation en Java. 
 
 
-![image](https://user-images.githubusercontent.com/84669542/184245862-8c2f7a52-466f-441e-bb0d-c566ba547a86.png)
+![image](https://user-images.githubusercontent.com/84669542/184245862-8c2![ImageFrogger](https://user-images.githubusercontent.com/84669542/184246203-88692e29-1848-4449-91b6-573cf9ba1b2d.png)
+f7a52-466f-441e-bb0d-c566ba547a86.png)
 
 
 ## Fonctionnement 
