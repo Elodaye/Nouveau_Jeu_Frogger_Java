@@ -19,4 +19,9 @@ Par la suite, la grenouille aura un certain nombre d'erreurs. Pour gagner, elle 
 Un nouveau mode, infini, est prévu. 
 La grenouille ne peut se déplacer qu'horizontalement, mais où les obstacles défilent, avec un comptage de points. 
 
-Une fenêtre de lancement, de redémarrage et de fin de jeu sera alors ajoutée. 
+Une fenêtre de lancement, de redémarrage et de fin de jeu sera alors ajoutée.
+
+Maintenant on peut compter le nombre d'erreurs et afficher game Over quand on perd. Ce serait bien que le jeu se coupe, ou propose de recommencer. Mais il peut continuer à bouger en fond, simplement la grenouille ne répond plus aux touches, ou de tombe plus sur les obstacles, ou on ne revient plus à zero. 
+Prochaine étape, ajouter la barre de vie.  
+
+Quand YOU WIN et GAME OVER : proposer un "retry", sans que ne puisse toucher à quoi que ce soit d'autre

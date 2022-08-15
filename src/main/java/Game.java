@@ -14,6 +14,7 @@ public class Game extends JPanel implements Runnable, KeyListener {    // Orga d
     Lane[] lanes ;
     Winner[] winners;
     Loser[] losers;
+    LoserGame loserGame;
 
 
     boolean isRunning ;
@@ -36,6 +37,9 @@ public class Game extends JPanel implements Runnable, KeyListener {    // Orga d
         w.add (new Game ());
         w.pack ();  // ajuste directement la taille du cadre
         w.setLocationRelativeTo(null);
+
+
+
         w.setVisible(true);
     }
 
@@ -84,6 +88,8 @@ public class Game extends JPanel implements Runnable, KeyListener {    // Orga d
                 losers[i] = new Loser ( (i*84), 28);
             }
 
+            loserGame = new LoserGame (25, 100);
+
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -102,19 +108,31 @@ public class Game extends JPanel implements Runnable, KeyListener {    // Orga d
        // System.out.print (laneIndex);
 
         if (laneIndex == 7) {  //  on est sur la voie du snake
-            lanes[10].check(frog);
+            if (lanes[10].check(frog)) // rajouter un if, comme ça on sait si on a heurté
+            {
+                loserGame.lives = loserGame.lives - 1;
+                System.out.print ("Verif snake ");
+            }
         } else if (laneIndex >= 8 && laneIndex <= 12) { // voies des voitures
             laneIndex -= 8;
-            lanes[laneIndex].check(frog);
+            if (lanes[laneIndex].check(frog))
+            {
+                loserGame.lives = loserGame.lives - 1;
+                System.out.print ("Verif voitures  ");
+            }
         } else if (laneIndex >=2 && laneIndex <= 6) { // voies des rondins
          laneIndex += 3;
-         lanes[laneIndex].check(frog);
+            if (lanes[laneIndex].check(frog)) {
+                loserGame.lives = loserGame.lives - 1;
+                System.out.print("Verif rondins tombé  ");
+            }
          }
 
         for (Winner winner : winners) {
             if (frog.intersects(winner)) {
                 if (!winner.visible) {
                     winner.visible = true;  // Un des points de victoire à été atteint
+                    loserGame.points =  loserGame.points + 1  ;
                 } else {
                     frog.resetFrog();
                 }
@@ -123,11 +141,13 @@ public class Game extends JPanel implements Runnable, KeyListener {    // Orga d
 
         for (Loser loser : losers) {
             if (frog.intersects(loser)) {
+                loserGame.lives = loserGame.lives - 1;
                 loser.falling = true;  // on a traversé les voies mais est tombé dans un trou noir
                     frog.resetFrog();
             }
             loser.update();
         }
+
 
     }
 
@@ -148,6 +168,8 @@ public class Game extends JPanel implements Runnable, KeyListener {    // Orga d
         }
 
         frog.draw(g2);
+
+        loserGame.draw(g2);
 
         Graphics g = getGraphics ();
         g.drawImage(view, 0, 0, WIDTH * SCALE , HEIGHT * SCALE, null);
@@ -339,11 +361,13 @@ public class Game extends JPanel implements Runnable, KeyListener {    // Orga d
             }
         }
 
-        public void check(Frog frog) {
+        public boolean check(Frog frog) {
             if (type != TypeObstacle.LOG_1 && type != TypeObstacle.LOG_2  && type != TypeObstacle.LOG_3 && type != TypeObstacle.LOG_4 && type != TypeObstacle.LOG_5) {
                 for (Obstacle obstacle : obstacles) {
-                    if (frog.intersects(obstacle)) {  // intersecter le snake ou la voiture fait perdre la grenouille
+                    if (frog.intersects(obstacle)) {// intersecter le snake ou la voiture fait perdre la grenouille
                         frog.resetFrog();
+                        System.out.print ("obstacle ");
+                        return true;
                     }
                 }
             } else {
@@ -356,8 +380,12 @@ public class Game extends JPanel implements Runnable, KeyListener {    // Orga d
                 }
                 if (!ok) {
                     frog.resetFrog();
+                    System.out.print ("Tombé dans l'eau ");
+                    return true;
                 }
+
             }
+            return false;
         }
 
         public void update () {
@@ -514,6 +542,7 @@ public class Game extends JPanel implements Runnable, KeyListener {    // Orga d
         }
     }
 
+
     public class Loser extends BoxCollider {
         boolean falling ;
         BufferedImage image;
@@ -539,8 +568,9 @@ public class Game extends JPanel implements Runnable, KeyListener {    // Orga d
             }
         }
 
+
         public void draw (Graphics2D g) {
-                g.drawImage (image, (int) x, (int) y, (int) width, (int) height, null);
+            g.drawImage (image, (int) x, (int) y, (int) width, (int) height, null);
         }
 
         public void update () {
@@ -554,6 +584,59 @@ public class Game extends JPanel implements Runnable, KeyListener {    // Orga d
 
             }
         }
+    }
+
+
+
+    public class LoserGame extends BoxCollider {
+        int lives ;
+        int points;
+        BufferedImage imageWin;
+        BufferedImage imageLose;
+        int frameIndex;
+        BufferedImage[] anim;
+        boolean visible ;
+
+        public LoserGame (float x , float y) {
+            super (x,y,400,200);
+            try {
+                BufferedImage frogSpriteSheet0 = ImageIO.read(getClass().getResource("/game_over.png"));
+                BufferedImage frogSpriteSheet1 = ImageIO.read(getClass().getResource("/lifebar.png"));
+                BufferedImage frogSpriteSheet2 = ImageIO.read(getClass().getResource("/you_win2.png"));
+
+                width = 400;
+                height = 200;
+                lives = 3;
+                points = 0;
+                anim = new BufferedImage[4];
+
+                for (int i = 0; i <4; i++){
+                    anim[i] = frogSpriteSheet1.getSubimage(0, 64 * i, 192, 64);
+                }
+
+                imageLose = frogSpriteSheet0;
+                imageWin = frogSpriteSheet2;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void draw (Graphics2D g) {
+         //   System.out.print(lives);
+            g.drawImage(anim[lives], 10, -2, (int) 78, (int) 28, null);
+            if (lives < 1 ) {
+                System.out.print("  La ca devrait perdre  ");
+                g.drawImage(imageLose, (int) x, (int) y, (int) width, (int) height, null);
+               // isRunning = false;
+            }
+            else if (points >= 2) {
+                System.out.print("  La ca devrait gagner  ");
+                g.drawImage(imageWin, (int) 0, (int) 60, (int) (1.1*width), (int) (1.1*height), null);
+              //  isRunning = false;
+            }
+        }
+
+
     }
 
 
