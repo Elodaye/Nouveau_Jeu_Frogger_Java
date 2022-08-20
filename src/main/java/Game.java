@@ -622,17 +622,12 @@ public class Game extends JPanel implements Runnable, KeyListener {    // Orga d
         }
 
         public void draw (Graphics2D g) {
-         //   System.out.print(lives);
             g.drawImage(anim[lives], 10, -2, (int) 78, (int) 28, null);
             if (lives < 1 ) {
-                System.out.print("  La ca devrait perdre  ");
                 g.drawImage(imageLose, (int) x, (int) y, (int) width, (int) height, null);
-               // isRunning = false;
             }
-            else if (points >= 2) {
-                System.out.print("  La ca devrait gagner  ");
+            else if (points >= 6) {
                 g.drawImage(imageWin, (int) 0, (int) 60, (int) (1.1*width), (int) (1.1*height), null);
-              //  isRunning = false;
             }
         }
 
